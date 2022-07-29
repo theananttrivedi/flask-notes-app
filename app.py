@@ -1,25 +1,39 @@
-from flask import Flask
-from flask import request
+from flask import Flask, url_for, request, jsonify, redirect, render_template
 import secrets
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_migrate import Migrate
+
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'static/notes/images'
+UPLOAD_FOLDER_URL = '/static/notes/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'foo.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(300), unique=False, nullable=False)
     answer = db.Column(db.String(300), unique=False, nullable=False)
+    image_name = db.Column(db.String(300), unique=False, nullable=True)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'),
         nullable=False)
     group = db.relationship('Group',
         backref=db.backref('notes', lazy=True))
     def __repr__(self):
         return '<Note %r>' % self.question
+
+    def serialize(self):
+        return {"id": self.id,
+                "question": self.question,
+                "answer": self.answer,
+                "group_id": self.group_id}
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,8 +42,31 @@ class Group(db.Model):
     def __repr__(self):
         return '<Group %r>' % self.name
 
-notes = {}
+    def serialize(self):
+        return {"id": self.id,
+                "name": self.name}
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def note_response(note_record):
+    if note_record.image_name is None:
+        return {
+        'id':note_record.id, 
+        'question':note_record.question, 
+        'answer':note_record.answer,
+        'group':note_record.group.name,
+        }
+    return {
+        'id':note_record.id, 
+        'question':note_record.question, 
+        'answer':note_record.answer,
+        'group':note_record.group.name,
+        'image_url': url_for('get_image_file', id_=note_record.id)
+        }
+    
+        
 @app.route("/")
 def home():
     return "Welcome to home"
@@ -46,7 +83,8 @@ def init():
 def add_note():
     question = request.form['question']
     answer = request.form['answer']
-    group = request.form['group'] 
+    group = request.form['group']
+    image_file = request.files['image']
 
     group_record = Group.query.filter_by(name=group).first()
     if group_record is None:
@@ -54,15 +92,28 @@ def add_note():
         db.session.add(group_record)
 
     note_record = Note(question=question, answer=answer, group=group_record)
+
+    if image_file and allowed_file(image_file.filename):
+        filename = secure_filename(image_file.filename)
+        name, ext = os.path.splitext(filename)
+        filename = name + secrets.token_hex(10) + ext
+        save_location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image_file.save(save_location)
+        note_record.image_name = filename
+
     db.session.add(note_record)
     db.session.commit()
     return {
         'message':'Created',
-        'id':note_record.id, 
-        'question':note_record.question, 
-        'answer':note_record.answer,
-        'group':note_record.group.name
+        'note':note_response(note_record)
         }
+
+@app.route("/api/groups")
+def groups():
+    return {
+        "groups":list(map(lambda grp: grp.serialize(), Group.query.all()))
+    }
+
 
 @app.route("/api/group", methods=['POST'])
 def add_group():
@@ -80,7 +131,16 @@ def add_group():
         'name':group_record.name, 
         }
 
+from flask import send_from_directory
 
+@app.route('/api/note/<id_>/image/default')
+def get_image_file(id_):
+    note_record = Note.query.get(id_)
+    if note_record is None:
+        return "Inavlid Note"
+    if note_record.image_name is None:
+        return "Sorry, no image for this note!"
+    return send_from_directory(app.config["UPLOAD_FOLDER"], note_record.image_name)
 
 @app.route("/api/note/<id_>", methods=['GET', 'DELETE', 'PUT'])
 def get_note(id_):
@@ -99,6 +159,7 @@ def get_note(id_):
         question = request.form['question'] or None
         answer = request.form['answer'] or None
         group = request.form['group'] or None
+        image_file = request.files['image'] or None
 
         group_record = Group.query.filter_by(name=group).first()
         if group_record is None:
@@ -107,24 +168,29 @@ def get_note(id_):
         note_record.question = note_record.question if question is None else question
         note_record.answer = note_record.answer if answer is None else answer
         note_record.group_id = note_record.group_id if group_record.id is None else group_record.id 
+
+        if image_file and allowed_file(image_file.filename):
+            if note_record.image_name is not None:
+                old_image_location = os.path.join(app.config['UPLOAD_FOLDER'], note_record.image_name)
+                os.remove(old_image_location)
+
+            filename = secure_filename(image_file.filename)
+            name, ext = os.path.splitext(filename)
+            filename = name + secrets.token_hex(10) + ext
+            save_location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image_file.save(save_location)
+            note_record.image_name = filename
         
         db.session.add(note_record)
         db.session.commit()
         
         return {
         'message':'Updated',
-        'id':note_record.id, 
-        'question':note_record.question, 
-        'answer':note_record.answer,
-        'group':note_record.group.name
+       'note':note_response(note_record)
         }
 
-    return {
-        'id':note_record.id, 
-        'question':note_record.question, 
-        'answer':note_record.answer,
-        'group':note_record.group.name
-        }
+    return note_response(note_record)
+        
 
 @app.route("/api/group/<id_>", methods=['GET', 'DELETE', 'PUT'])
 def get_notes(id_):
@@ -156,11 +222,7 @@ def get_notes(id_):
 
     notes = []
     for note_record in Note.query.filter_by(group_id=id_).paginate(page,per_page,error_out=False).items:
-        notes.append({
-        'id':note_record.id,
-        'question':note_record.question, 
-        'answer':note_record.answer,
-        })
+        notes.append(note_response(note_record))
     return {'id':group_record.id, 'name':group_record.name, 'notes':notes}
 
 
