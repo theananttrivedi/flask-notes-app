@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(),'foo.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'foo.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -79,16 +79,17 @@ def get_note(id_):
 
 @app.route("/api/group/<id_>")
 def get_notes(id_):
-
+    per_page = 10
+    page = request.args.get('page', default = 1, type = int)
     group_record = Group.query.filter_by(id=id_).first()
 
     if group_record is None:
         return "This Group Does not Exist"
 
     notes = []
-    for note_record in group_record.notes:
+    for note_record in Note.query.filter_by(group_id=id_).paginate(page,per_page,error_out=False).items:
         notes.append({
-        'id':note_record.id, 
+        'id':note_record.id,
         'question':note_record.question, 
         'answer':note_record.answer,
         })
