@@ -169,3 +169,21 @@ payload = "--kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A\r\nContent-Disposition: form-data;
 response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
 
 print(response.text)
+
+#11
+
+import requests
+
+reqUrl = "http://127.0.0.1/api/note"
+
+headersList = {
+ "Accept": "*/*",
+ "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+ "Content-Type": "multipart/form-data; boundary=kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A" 
+}
+
+payload = "--kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A\r\nContent-Disposition: form-data; name=\"question\"\r\n\r\nHow do you delete a branch in git?\r\n--kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A\r\nContent-Disposition: form-data; name=\"answer\"\r\n\r\ngit branch -d <branch name>\r\n--kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A\r\nContent-Disposition: form-data; name=\"group\"\r\n\r\ncse\r\n--kljmyvW1ndjXaOEAg4vPm6RBUqO6MC5A--\r\n"
+
+response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+
+print(response.text)
