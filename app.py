@@ -18,6 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,6 +74,12 @@ def note_response(note_record):
 def home():
     return "Welcome to home"
 
+@app.route("/api/groupnamebyid/<id_>")
+def groupinfo(id_):
+    group_record = Group.query.get(id_)
+    if not group_record:
+        return {}
+    return {'name':group_record.name}
 
 @app.route("/api/init")
 def init():
@@ -86,7 +93,7 @@ def add_note():
     question = request.form['question']
     answer = request.form['answer']
     group = request.form['group']
-    image_file = request.files['image']
+    image_file = request.files.get('image', None)
 
     group_record = Group.query.filter_by(name=group).first()
     if group_record is None:

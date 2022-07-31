@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import GroupForm from "./GroupForm";
+import GroupListItem from "./GroupListItem";
 const GROUPS_URL = "http://127.0.0.1/api/groups";
 const GroupsPage = () => {
   const fetchGroupsAndSetStateWithGroups = async () => {
@@ -11,21 +13,22 @@ const GroupsPage = () => {
   };
   useEffect(() => {
     fetchGroupsAndSetStateWithGroups();
-  });
+  }, []);
   const [groups, setGroups] = useState([]);
   return (
     <div>
       <h1>GroupsPage</h1>
-      <ul>
+      <GroupForm />
+      <div>
         {groups &&
           groups.map((group) => {
             return (
-              <li id={group.id} key={group.key}>
-                <Link to={"/group/" + group.id}>{group.name}</Link>
-              </li>
+              <Link to={"/group/" + group.id}>
+                <GroupListItem name={group.name} id={group.id} />
+              </Link>
             );
           })}
-      </ul>
+      </div>
     </div>
   );
 };
