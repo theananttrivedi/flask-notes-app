@@ -160,6 +160,8 @@ def get_note(id_):
         return "Note Doesn't Exists"
 
     if request.method == 'DELETE':
+        if note_record.image_name:
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], note_record.image_name))
         db.session.delete(note_record)
         db.session.commit()
         return "Note Deleted Successfully"
