@@ -5,6 +5,7 @@ import os
 from flask_migrate import Migrate
 
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 UPLOAD_FOLDER = 'static/notes/images'
 UPLOAD_FOLDER_URL = '/static/notes/images'
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+cors = CORS(app)
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
