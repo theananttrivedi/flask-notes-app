@@ -29,6 +29,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    textAlign: "left",
   },
   thumbnailImageStyle: {
     width: "12vw",

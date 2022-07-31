@@ -17,14 +17,14 @@ const GroupPage = () => {
   }, []);
   const [notes, setNotes] = useState([]);
   return (
-    <div>
+    <div style={styles.groupDivStyle}>
       <h1>GroupPage</h1>
       <h1>Notes</h1>
       {notes &&
         notes.map((note) => {
           return (
             <NoteListItem
-              id={id}
+              id={note.id}
               question={note.question}
               answer={note.answer}
               image_url={note.image_url ? note.image_url : null}
@@ -33,6 +33,12 @@ const GroupPage = () => {
         })}
     </div>
   );
+};
+
+const styles = {
+  groupDivStyle: {
+    textAlign: "center",
+  },
 };
 
 export default GroupPage;
