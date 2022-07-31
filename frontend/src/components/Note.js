@@ -1,6 +1,6 @@
 import { useState } from "react";
-
-const Note = ({ question, answer, image_url }) => {
+import deleteNoteById from "../utils/deleteNoteById";
+const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
   const toggleAnswer = () => {
@@ -19,6 +19,12 @@ const Note = ({ question, answer, image_url }) => {
   };
   return (
     <div style={styles.noteDivStyle}>
+      <button
+        style={styles.deleteButtonStyle}
+        onClick={(e) => deleteNoteById(id)}
+      >
+        Delete
+      </button>
       <div style={styles.noteContentBlockStyle}>
         {" "}
         <div style={styles.questionAndThumbnailSubblock}>
@@ -91,6 +97,16 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  deleteButtonStyle: {
+    postion: "absolute",
+    // bottom: "1rem",
+    right: "1rem",
+    border: "none",
+    padding: ".75rem",
+    background: "transparent",
+    textDecoration: "none",
+    color: "red",
   },
 };
 

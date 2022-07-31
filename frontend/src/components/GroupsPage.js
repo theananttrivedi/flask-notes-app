@@ -22,11 +22,7 @@ const GroupsPage = () => {
       <div>
         {groups &&
           groups.map((group) => {
-            return (
-              <Link to={"/group/" + group.id}>
-                <GroupListItem name={group.name} id={group.id} />
-              </Link>
-            );
+            return <GroupListItem name={group.name} id={group.id} />;
           })}
       </div>
     </div>

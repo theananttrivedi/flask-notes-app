@@ -21,6 +21,7 @@ const NotePage = () => {
       <h1>NotePage - id:{id}</h1>
       {note && (
         <Note
+          id={note.id}
           question={note.question}
           answer={note.answer}
           image_url={note.image_url}
@@ -28,6 +29,19 @@ const NotePage = () => {
       )}
     </div>
   );
+};
+
+const styles = {
+  deleteButtonStyle: {
+    postion: "absolute",
+    bottom: "1rem",
+    right: "1rem",
+    border: "none",
+    padding: ".75rem",
+    background: "transparent",
+    textDecoration: "none",
+    color: "red",
+  },
 };
 
 export default NotePage;
