@@ -5,6 +5,7 @@ const Note_CREATION_URL = "http://127.0.0.1/api/note";
 const NoteForm = ({ group }) => {
   const [question, setQuestion] = useState();
   const [answer, setAnswer] = useState();
+  const [imagefile, setImagefile] = useState(null);
   const questionOnChange = (e) => {
     setQuestion(e.target.value);
   };
@@ -14,18 +15,22 @@ const NoteForm = ({ group }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    requestApiToCreateANote(question, answer, group);
+    requestApiToCreateANote(question, answer, group, imagefile);
   };
 
-  const requestApiToCreateANote = async (q, a, g) => {
+  const requestApiToCreateANote = async (q, a, g, f = null) => {
     const noteData = new FormData();
     noteData.append("question", q);
     noteData.append("answer", a);
     noteData.append("group", g);
+    if (f) {
+      noteData.append("image", f);
+    }
     console.log({
       question: q,
       answer: a,
       group: g,
+      image: f,
     });
     let response = await axios({
       method: "post",
@@ -54,6 +59,11 @@ const NoteForm = ({ group }) => {
           onChange={answerOnChange}
           placeholder="Answer..."
           value={answer}
+        />
+        <input
+          name="image"
+          type={"file"}
+          onChange={(e) => setImagefile(e.target.files[0])}
         />
         <input type={"submit"} value="Create Note" />
       </form>
