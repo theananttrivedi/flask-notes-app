@@ -101,7 +101,10 @@ const styles = {
     zIndex: 1000,
   },
   modal: {},
-  modalShow: {},
+  modalShow: {
+    width: "100vw",
+    height: "100vh",
+  },
   modalClose: {
     color: "white",
   },
