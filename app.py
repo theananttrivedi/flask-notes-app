@@ -167,10 +167,10 @@ def get_note(id_):
         return "Note Deleted Successfully"
     
     if request.method == 'PUT':
-        question = request.form['question'] or None
-        answer = request.form['answer'] or None
-        group = request.form['group'] or None
-        image_file = request.files['image'] or None
+        question = request.form.get('question', None) 
+        answer = request.form.get('answer', None) 
+        group = request.form.get('group', None) 
+        image_file = request.files.get('image', None) 
 
         group_record = Group.query.filter_by(name=group).first()
         if group_record is None:
