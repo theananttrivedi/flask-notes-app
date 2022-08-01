@@ -39,10 +39,9 @@ const GroupPage = () => {
   const [notes, setNotes] = useState([]);
   return (
     <div style={styles.groupDivStyle}>
-      <h1>GroupPage</h1>
       <GroupUpdateForm id={id} name={groupname} />
       {groupname && <NoteForm group={groupname} />}
-      <h1>Notes</h1>
+
       {notes &&
         notes.map((note) => {
           return (
@@ -60,6 +59,8 @@ const GroupPage = () => {
 
 const styles = {
   groupDivStyle: {
+    transform: "translateY(5vh)",
+    height: "90vh",
     textAlign: "center",
   },
 };

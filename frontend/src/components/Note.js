@@ -19,46 +19,103 @@ const Note = ({ id, question, answer, image_url }) => {
   };
   return (
     <div style={styles.noteDivStyle}>
-      <button
+      {/* <button
         style={styles.deleteButtonStyle}
         onClick={(e) => deleteNoteById(id)}
       >
-        Delete
-      </button>
-      <div style={styles.noteContentBlockStyle}>
-        {" "}
-        <div style={styles.questionAndThumbnailSubblock}>
-          {" "}
-          <h1>{question}</h1>
-          {image_url && !showingImage && (
-            <img
-              onClick={toggleImage}
-              style={styles.noteImageSmallStyle}
-              src={"http://127.0.0.1" + image_url}
-            />
-          )}
-        </div>
-        {image_url && showingImage && (
-          <img
-            onClick={toggleImage}
-            style={styles.noteImageStyle}
-            src={"http://127.0.0.1" + image_url}
-          />
+        Delete 
+      </button> */}
+      <div style={styles.contentArea}>
+        {!showingAnswer && <p style={styles.question}>{question}</p>}
+
+        {image_url && !showingAnswer && (
+          <div
+            style={
+              showingImage ? styles.modalContainerShow : styles.modalContainer
+            }
+          >
+            <div style={showingImage ? styles.modalShow : styles.modal}>
+              {/* {showingImage && <span style={styles.modalClose}>X</span>} */}
+              <img
+                onClick={toggleImage}
+                style={
+                  showingImage
+                    ? styles.noteImageStyleShow
+                    : styles.noteImageStyle
+                }
+                src={"http://127.0.0.1" + image_url}
+              />
+            </div>
+          </div>
         )}
-        {showingAnswer && <h4>{answer}</h4>}
+        {showingAnswer && <p style={styles.answer}>{answer}</p>}
+      </div>{" "}
+      <div style={styles.controlsArea}>
+        <button style={styles.toggleButton} onClick={toggleAnswer}>
+          {" "}
+          {showingAnswer ? "Hide" : "Show"} Answer
+        </button>
       </div>
-      <button style={styles.toggleButton} onClick={toggleAnswer}>
-        {showingAnswer ? "Hide" : "Show"} Answer
-      </button>
     </div>
   );
 };
 
 const styles = {
-  noteDivStyle: {},
-  noteContentBlockStyle: {
-    // textAlign: "center",
-    marginLeft: "0.5rem",
+  noteDivStyle: {
+    postion: "relative",
+    transform: "translateY(5vh)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "90vh",
+    width: "100vw",
+    overflow: "hidden",
+  },
+  contentArea: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "80vh",
+    width: "100vw",
+    overflow: "hidden",
+    justifyContent: "center",
+    backgroundColor: "lightblue",
+  },
+  noteImageStyle: {
+    width: "50vw",
+  },
+  noteImageStyleShow: {
+    height: "90vh",
+  },
+  modalContainer: {},
+  modalContainerShow: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.7)",
+    position: "fixed",
+    top: "0vh",
+    height: "90vh",
+    width: "100vw",
+    zIndex: 1000,
+  },
+  modal: {},
+  modalShow: {},
+  modalClose: {
+    color: "white",
+  },
+  controlsArea: {
+    position: "absolute",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "10vh",
+    width: "100vw",
+    bottom: "0vh",
+    overflow: "hidden",
+    backgroundColor: "lightcoral",
+    // justifyContent: "center",
   },
   toggleButton: {
     padding: ".5rem",
@@ -66,37 +123,7 @@ const styles = {
     color: "white",
     border: "none",
     borderRadius: "0.25rem",
-    position: "absolute",
-    bottom: "20%",
-    left: "50%",
-    transform: "translateX(-50%)",
     fontWeight: "700",
-    zIndex: "-1",
-  },
-  noteImageStyle: {
-    width: "60vw",
-    zIndex: "1000",
-    transition: "all 1s ease-in",
-  },
-  // toggleImageButton: {
-  //   position: "absolute",
-  //   right: "1rem",
-  //   top: "10%",
-  // },
-  noteImageSmallStyle: {
-    // position: "absolute",
-    // right: "1rem",
-    // top: "10%",
-    width: "12vw",
-    height: "12vw",
-    objectFit: "cover",
-    transition: "all 2s ease-in",
-  },
-  questionAndThumbnailSubblock: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   deleteButtonStyle: {
     postion: "absolute",
@@ -107,6 +134,20 @@ const styles = {
     background: "transparent",
     textDecoration: "none",
     color: "red",
+  },
+  question: {
+    width: "100vw",
+    paddingInline: "1rem",
+    color: "rgb(39,47,62)",
+    fontWeight: "600",
+    fontSize: "2rem",
+  },
+  answer: {
+    width: "100vw",
+    paddingInline: "1rem",
+    color: "rgb(39,47,62)",
+    fontWeight: "600",
+    fontSize: "2rem",
   },
 };
 
