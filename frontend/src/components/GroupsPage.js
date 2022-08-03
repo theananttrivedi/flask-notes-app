@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import GroupForm from "./GroupForm";
 import GroupListItem from "./GroupListItem";
+import "./GroupsPage.css";
 const GROUPS_URL = "http://127.0.0.1/api/groups";
 const GroupsPage = () => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const GroupsPage = () => {
   }, []);
   const [groups, setGroups] = useState([]);
   return (
-    <div style={styles.container}>
+    <div className="group-container">
       <GroupForm />
       <div>
         {groups &&
@@ -31,11 +32,6 @@ const GroupsPage = () => {
   );
 };
 
-const styles = {
-  container: {
-    transform: "translateY(5vh)",
-    height: "90vh",
-  },
-};
+const styles = {};
 
 export default GroupsPage;

@@ -64,6 +64,11 @@ const styles = {
     transform: "translateY(5vh)",
     height: "90vh",
     textAlign: "center",
+    background: `linear-gradient(
+      to bottom right,
+      rgba(21, 21, 21, 1),
+      rgba(21, 21, 21, 0.8)
+    )`,
   },
 };
 

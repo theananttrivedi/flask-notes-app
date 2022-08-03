@@ -7,7 +7,11 @@
   height: 90vh;
   width: 100vw;
   overflow: hidden;
-  background-color: lightcoral;
+  background: linear-gradient(
+    to bottom right,
+    rgba(21, 21, 21, 1),
+    rgba(21, 21, 21, 0.8)
+  );
 }
 .note-container {
   display: flex;
@@ -17,7 +21,6 @@
   width: 100vw;
   overflow: hidden;
   justify-content: center;
-  background-color: lightblue;
 }
 .note-image-container {
   margin-top: 1rem;
@@ -39,6 +42,7 @@
 .note-question {
   width: 90vw;
   font-size: 1.6rem;
+  color: white;
 }
 
 .modal {
@@ -72,7 +76,7 @@
 
 .answer-toggle-button {
   padding: 0.5rem;
-  background-color: black;
+  background-color: rgb(6, 123, 192);
   color: white;
   border: none;
   border-radius: 0.25rem;
@@ -83,4 +87,5 @@
 .note-answer {
   width: 90vw;
   font-size: 1.6rem;
+  color: white;
 }
