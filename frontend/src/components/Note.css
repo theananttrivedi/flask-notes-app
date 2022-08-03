@@ -23,23 +23,43 @@
   justify-content: center;
 }
 .note-image-container {
-  margin-top: 1rem;
-  width: 50vw;
-  height: 50vw;
+  --img-width-size: 70vw;
+  --img-height-size: min(70vw, 100vw);
+  margin-top: 4rem;
+  width: var(--img-width-size);
+  height: var(--img-height-size);
+}
+
+@media screen and (min-width: 26rem) {
+  .note-image-container {
+    --img-width-size: 17.5rem;
+    --img-height-size: 17.5rem;
+  }
 }
 .note-image {
-  width: 50vw;
-  height: 50vw;
+  width: var(--img-width-size);
+  height: var(--img-height-size);
   object-fit: cover;
   transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
+  box-shadow: 0.1rem 0.1rem 4rem 0.1rem rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
 }
 
 .note-image:hover {
   transform: scale(1.1);
 }
 
+.note-question-container {
+  position: relative;
+  width: 90vw;
+  text-align: center;
+  font-size: 1.6rem;
+  color: white;
+}
+
 .note-question {
+  margin-left: auto;
   width: 90vw;
   font-size: 1.6rem;
   color: white;
@@ -68,13 +88,16 @@
   font-size: 2rem;
   font-weight: 600;
   cursor: pointer;
+  z-index: 2000;
 }
 
 .modal-image {
-  height: 100%;
+  height: 90vh;
 }
 
 .answer-toggle-button {
+  position: absolute;
+  bottom: 10vh;
   padding: 0.5rem;
   background-color: rgb(6, 123, 192);
   color: white;
@@ -85,6 +108,7 @@
 }
 
 .note-answer {
+  text-align: center;
   width: 90vw;
   font-size: 1.6rem;
   color: white;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import deleteNoteById from "../utils/deleteNoteById";
 import "./Note.css";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 /* <button
         style={styles.deleteButtonStyle}
         onClick={(e) => deleteNoteById(id)}
@@ -30,7 +31,9 @@ const Note = ({ id, question, answer, image_url }) => {
       <div className="note-container">
         {!showingAnswer ? (
           <>
-            <p className="note-question">{question}</p>
+            <div className="note-question-container">
+              <p className="note-question">{question}</p>
+            </div>
             {image_url && (
               <div className="note-image-container">
                 <img
@@ -43,18 +46,26 @@ const Note = ({ id, question, answer, image_url }) => {
           </>
         ) : (
           <p className="note-answer">{answer}</p>
-        )}
+        )}{" "}
+        <div onClick={toggleAnswer} className="answer-toggle-button">
+          {!showingAnswer ? "Show Answer" : "Hide Answer"}
+        </div>
       </div>
-      <div onClick={toggleAnswer} className="answer-toggle-button">
-        {!showingAnswer ? "Show Answer" : "Hide Answer"}
-      </div>
+
       <div className={showingImage ? "modal active" : "modal"}>
         {image_url && showingImage && (
           <>
             <span onClick={toggleImage} className="modal-close">
               &times;
             </span>
-            <img className="modal-image" src={"http://127.0.0.1" + image_url} />
+            <TransformWrapper>
+              <TransformComponent>
+                <img
+                  className="modal-image"
+                  src={"http://127.0.0.1" + image_url}
+                />
+              </TransformComponent>
+            </TransformWrapper>
           </>
         )}
       </div>
@@ -63,19 +74,6 @@ const Note = ({ id, question, answer, image_url }) => {
 };
 
 const styles = {
-  controlsArea: {
-    position: "absolute",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "10vh",
-    width: "100vw",
-    bottom: "0vh",
-    overflow: "hidden",
-    backgroundColor: "lightcoral",
-    // justifyContent: "center",
-  },
-
   deleteButtonStyle: {
     postion: "absolute",
     // bottom: "1rem",
