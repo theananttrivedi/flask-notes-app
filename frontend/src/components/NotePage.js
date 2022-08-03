@@ -18,15 +18,14 @@ const NotePage = () => {
   }, []);
   const [note, setNote] = useState({});
   return (
-    <div>
-      <h1>NotePage - id:{id}</h1>
-      <NoteUpdateForm
+    <div style={styles.noteContainer}>
+      {/* <NoteUpdateForm
         id={note.id}
         question={note.question}
         answer={note.answer}
         image={note.image_url}
         group={note.group}
-      />
+      /> */}
       {note && (
         <Note
           id={note.id}
@@ -49,6 +48,11 @@ const styles = {
     background: "transparent",
     textDecoration: "none",
     color: "red",
+  },
+  noteContainer: {
+    display: "flex",
+    postion: "absolute",
+    top: "5vh",
   },
 };
 

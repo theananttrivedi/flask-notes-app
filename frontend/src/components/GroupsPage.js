@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import GroupForm from "./GroupForm";
 import GroupListItem from "./GroupListItem";
 const GROUPS_URL = "http://127.0.0.1/api/groups";
 const GroupsPage = () => {
+  const location = useLocation();
+  const propsPassedViaLinkTag = location.state;
   const fetchGroupsAndSetStateWithGroups = async () => {
     let response = await axios.get(GROUPS_URL);
     if (response.data) {
@@ -12,12 +14,12 @@ const GroupsPage = () => {
     }
   };
   useEffect(() => {
+    console.log(propsPassedViaLinkTag);
     fetchGroupsAndSetStateWithGroups();
   }, []);
   const [groups, setGroups] = useState([]);
   return (
-    <div>
-      <h1>GroupsPage</h1>
+    <div style={styles.container}>
       <GroupForm />
       <div>
         {groups &&
@@ -27,6 +29,13 @@ const GroupsPage = () => {
       </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    transform: "translateY(5vh)",
+    height: "90vh",
+  },
 };
 
 export default GroupsPage;

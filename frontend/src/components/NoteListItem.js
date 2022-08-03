@@ -1,47 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useRecoilState } from "recoil";
+import currentPageTitle from "../atoms/currentPageTitle";
+import "./NoteListItem.css";
+const truncate = (s, n = 15) => {
+  let x = s;
+  let noOfCharactersToDisplay = n;
+  if (x.length > noOfCharactersToDisplay) {
+    return x.slice(0, noOfCharactersToDisplay) + "...";
+  } else {
+    return x + "...";
+  }
+};
 const NoteListItem = ({ id, question, answer, image_url }) => {
+  const [title, setTitle] = useRecoilState(currentPageTitle);
   return (
-    <div style={styles.nodeListItemDivStyle}>
-      <div style={styles.textBlockDivStyle}>
-        <p>{question}</p>
-        {/* <p>{answer}</p> */}
-        <Link to={"/note/" + id}>View</Link>
-      </div>
+    <div className="note-item-container">
+      <Link
+        className="note-item-link"
+        onClick={(e) =>
+          setTitle("Note: " + "(" + id + ") " + truncate(question))
+        }
+        to={"/note/" + id}
+      >
+        <p className="text-block">{truncate(question, 25)}</p>
 
-      <div style={styles.imageBlockDivStyle}>
         {image_url && (
-          <img
-            style={styles.thumbnailImageStyle}
-            src={"http://127.0.0.1" + image_url}
-          />
+          <div className="note-item-image-container">
+            <img
+              className="note-item-image"
+              src={"http://127.0.0.1" + image_url}
+            />
+          </div>
         )}
-      </div>
+      </Link>
     </div>
   );
 };
 
-const styles = {
-  nodeListItemDivStyle: {
-    width: "100vw",
-    border: "solid black 1px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    textAlign: "left",
-  },
-  thumbnailImageStyle: {
-    width: "12vw",
-    height: "12vw",
-    objectFit: "cover",
-  },
-  textBlockDivStyle: {
-    marginLeft: "1rem",
-  },
-  imageBlockDivStyle: {
-    marginRight: "1rem",
-  },
-};
+const styles = {};
 
 export default NoteListItem;

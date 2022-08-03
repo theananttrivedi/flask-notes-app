@@ -1,36 +1,31 @@
 import deleteGroupById from "../utils/deleteGroupById";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import currentPageTitle from "../atoms/currentPageTitle";
+import "./GroupListItem.css";
 const GroupListItem = ({ id, name }) => {
+  const [title, setTitle] = useRecoilState(currentPageTitle);
   return (
-    <div style={styles.componentMainblockStyle}>
-      <Link to={"/group/" + id}>
-        {" "}
-        <p>{name}</p>
-      </Link>
-      <button
-        style={styles.deleteButtonStyle}
-        onClick={(e) => deleteGroupById(id)}
-      >
-        Delete
-      </button>
-    </div>
+    <>
+      <div className="container">
+        <Link
+          className="link"
+          onClick={(e) => setTitle("Group: " + name)}
+          to={"/group/" + id}
+        >
+          {name}
+        </Link>
+        {/* <button
+          style={styles.deleteButtonStyle}
+          onClick={(e) => deleteGroupById(id)}
+        >
+          Delete
+        </button> */}
+      </div>
+    </>
   );
 };
 
-const styles = {
-  componentMainblockStyle: {
-    border: "solid black 1px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  deleteButtonStyle: {
-    border: "none",
-    padding: ".75rem",
-    background: "transparent",
-    textDecoration: "none",
-    color: "red",
-  },
-};
+const styles = {};
 
 export default GroupListItem;

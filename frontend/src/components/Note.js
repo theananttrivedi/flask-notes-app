@@ -1,5 +1,12 @@
 import { useState } from "react";
 import deleteNoteById from "../utils/deleteNoteById";
+import "./Note.css";
+/* <button
+        style={styles.deleteButtonStyle}
+        onClick={(e) => deleteNoteById(id)}
+      >
+        Delete 
+      </button> */
 const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
@@ -11,6 +18,7 @@ const Note = ({ id, question, answer, image_url }) => {
     }
   };
   const toggleImage = () => {
+    console.log(showingImage);
     if (showingImage) {
       setShowingImage(false);
     } else {
@@ -18,86 +26,56 @@ const Note = ({ id, question, answer, image_url }) => {
     }
   };
   return (
-    <div style={styles.noteDivStyle}>
-      <button
-        style={styles.deleteButtonStyle}
-        onClick={(e) => deleteNoteById(id)}
-      >
-        Delete
-      </button>
-      <div style={styles.noteContentBlockStyle}>
-        {" "}
-        <div style={styles.questionAndThumbnailSubblock}>
-          {" "}
-          <h1>{question}</h1>
-          {image_url && !showingImage && (
-            <img
-              onClick={toggleImage}
-              style={styles.noteImageSmallStyle}
-              src={"http://127.0.0.1" + image_url}
-            />
-          )}
-        </div>
-        {image_url && showingImage && (
-          <img
-            onClick={toggleImage}
-            style={styles.noteImageStyle}
-            src={"http://127.0.0.1" + image_url}
-          />
+    <div className="note-component-container">
+      <div className="note-container">
+        {!showingAnswer ? (
+          <>
+            <p className="note-question">{question}</p>
+            {image_url && (
+              <div className="note-image-container">
+                <img
+                  onClick={toggleImage}
+                  className="note-image"
+                  src={"http://127.0.0.1" + image_url}
+                />
+              </div>
+            )}
+          </>
+        ) : (
+          <p className="note-answer">{answer}</p>
         )}
-        {showingAnswer && <h4>{answer}</h4>}
       </div>
-      <button style={styles.toggleButton} onClick={toggleAnswer}>
-        {showingAnswer ? "Hide" : "Show"} Answer
-      </button>
+      <div onClick={toggleAnswer} className="answer-toggle-button">
+        {!showingAnswer ? "Show Answer" : "Hide Answer"}
+      </div>
+      <div className={showingImage ? "modal active" : "modal"}>
+        {image_url && showingImage && (
+          <>
+            <span onClick={toggleImage} className="modal-close">
+              &times;
+            </span>
+            <img className="modal-image" src={"http://127.0.0.1" + image_url} />
+          </>
+        )}
+      </div>
     </div>
   );
 };
 
 const styles = {
-  noteDivStyle: {},
-  noteContentBlockStyle: {
-    // textAlign: "center",
-    marginLeft: "0.5rem",
-  },
-  toggleButton: {
-    padding: ".5rem",
-    backgroundColor: "black",
-    color: "white",
-    border: "none",
-    borderRadius: "0.25rem",
+  controlsArea: {
     position: "absolute",
-    bottom: "20%",
-    left: "50%",
-    transform: "translateX(-50%)",
-    fontWeight: "700",
-    zIndex: "-1",
-  },
-  noteImageStyle: {
-    width: "60vw",
-    zIndex: "1000",
-    transition: "all 1s ease-in",
-  },
-  // toggleImageButton: {
-  //   position: "absolute",
-  //   right: "1rem",
-  //   top: "10%",
-  // },
-  noteImageSmallStyle: {
-    // position: "absolute",
-    // right: "1rem",
-    // top: "10%",
-    width: "12vw",
-    height: "12vw",
-    objectFit: "cover",
-    transition: "all 2s ease-in",
-  },
-  questionAndThumbnailSubblock: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     alignItems: "center",
+    height: "10vh",
+    width: "100vw",
+    bottom: "0vh",
+    overflow: "hidden",
+    backgroundColor: "lightcoral",
+    // justifyContent: "center",
   },
+
   deleteButtonStyle: {
     postion: "absolute",
     // bottom: "1rem",
