@@ -47,10 +47,11 @@ const styles = {
     justifyContent: "space-between",
     width: "100vw",
     height: "5vh",
-    position: "absolute",
+    position: "fixed",
     bottom: "0",
     backgroundColor: "rgba(39,47,62,0.2)",
     backdropFilter: "blur(2rem)",
+    zIndex: 1000,
   },
   button: {
     paddingLeft: "1rem",

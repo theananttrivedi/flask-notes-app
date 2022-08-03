@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import currentPageTitle from "../atoms/currentPageTitle";
+import "./NoteListItem.css";
 const truncate = (s, n = 15) => {
   let x = s;
   let noOfCharactersToDisplay = n;
@@ -14,59 +15,29 @@ const truncate = (s, n = 15) => {
 const NoteListItem = ({ id, question, answer, image_url }) => {
   const [title, setTitle] = useRecoilState(currentPageTitle);
   return (
-    <Link
-      style={styles.link}
-      onClick={(e) => setTitle("Note: " + "(" + id + ") " + truncate(question))}
-      to={"/note/" + id}
-    >
-      <div style={styles.nodeListItemDivStyle}>
-        <div style={styles.textBlockDivStyle}>
-          <p>{truncate(question, 25)}</p>
-          {/* <p>{answer}</p> */}
-        </div>
+    <div className="note-item-container">
+      <Link
+        className="note-item-link"
+        onClick={(e) =>
+          setTitle("Note: " + "(" + id + ") " + truncate(question))
+        }
+        to={"/note/" + id}
+      >
+        <p className="text-block">{truncate(question, 25)}</p>
 
-        <div style={styles.imageBlockDivStyle}>
-          {image_url && (
+        {image_url && (
+          <div className="note-item-image-container">
             <img
-              style={styles.thumbnailImageStyle}
+              className="note-item-image"
               src={"http://127.0.0.1" + image_url}
             />
-          )}
-        </div>
-      </div>
-    </Link>
+          </div>
+        )}
+      </Link>
+    </div>
   );
 };
 
-const styles = {
-  nodeListItemDivStyle: {
-    width: "100vw",
-    border: "none",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    textAlign: "left",
-    backgroundColor: "white",
-    borderBottom: "0.1rem solid rgba(39,47,62,0.2)",
-    // backdropFilter: "blur(2rem)",
-  },
-  thumbnailImageStyle: {
-    width: "12vw",
-    height: "12vw",
-    objectFit: "cover",
-  },
-  textBlockDivStyle: {
-    marginLeft: "1rem",
-  },
-  imageBlockDivStyle: {
-    marginRight: "1rem",
-  },
-  link: {
-    color: "rgb(6,123,192)",
-    fontWeight: "400",
-    fontSize: "1.2rem",
-    textDecoration: "none",
-  },
-};
+const styles = {};
 
 export default NoteListItem;

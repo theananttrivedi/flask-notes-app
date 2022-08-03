@@ -26,11 +26,12 @@ const styles = {
     alignItems: "center",
     width: "100vw",
     height: "5vh",
-    position: "absolute",
+    position: "fixed",
     top: "0",
     backgroundColor: "rgba(39,47,62,0.2)",
     backdropFilter: "blur(2rem)",
     textAlign: "center",
+    zIndex: 1000,
   },
   title: {
     position: "absolute",

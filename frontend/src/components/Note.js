@@ -1,5 +1,12 @@
 import { useState } from "react";
 import deleteNoteById from "../utils/deleteNoteById";
+import "./Note.css";
+/* <button
+        style={styles.deleteButtonStyle}
+        onClick={(e) => deleteNoteById(id)}
+      >
+        Delete 
+      </button> */
 const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
@@ -11,6 +18,7 @@ const Note = ({ id, question, answer, image_url }) => {
     }
   };
   const toggleImage = () => {
+    console.log(showingImage);
     if (showingImage) {
       setShowingImage(false);
     } else {
@@ -18,96 +26,43 @@ const Note = ({ id, question, answer, image_url }) => {
     }
   };
   return (
-    <div style={styles.noteDivStyle}>
-      {/* <button
-        style={styles.deleteButtonStyle}
-        onClick={(e) => deleteNoteById(id)}
-      >
-        Delete 
-      </button> */}
-      <div style={styles.contentArea}>
-        {!showingAnswer && <p style={styles.question}>{question}</p>}
-
-        {image_url && !showingAnswer && (
-          <div
-            style={
-              showingImage ? styles.modalContainerShow : styles.modalContainer
-            }
-          >
-            <div style={showingImage ? styles.modalShow : styles.modal}>
-              {/* {showingImage && <span style={styles.modalClose}>X</span>} */}
-              <img
-                onClick={toggleImage}
-                style={
-                  showingImage
-                    ? styles.noteImageStyleShow
-                    : styles.noteImageStyle
-                }
-                src={"http://127.0.0.1" + image_url}
-              />
-            </div>
-          </div>
+    <div className="note-component-container">
+      <div className="note-container">
+        {!showingAnswer ? (
+          <>
+            <p className="note-question">{question}</p>
+            {image_url && (
+              <div className="note-image-container">
+                <img
+                  onClick={toggleImage}
+                  className="note-image"
+                  src={"http://127.0.0.1" + image_url}
+                />
+              </div>
+            )}
+          </>
+        ) : (
+          <p className="note-answer">{answer}</p>
         )}
-        {showingAnswer && <p style={styles.answer}>{answer}</p>}
-      </div>{" "}
-      <div style={styles.controlsArea}>
-        <button style={styles.toggleButton} onClick={toggleAnswer}>
-          {" "}
-          {showingAnswer ? "Hide" : "Show"} Answer
-        </button>
+      </div>
+      <div onClick={toggleAnswer} className="answer-toggle-button">
+        {!showingAnswer ? "Show Answer" : "Hide Answer"}
+      </div>
+      <div className={showingImage ? "modal active" : "modal"}>
+        {image_url && showingImage && (
+          <>
+            <span onClick={toggleImage} className="modal-close">
+              &times;
+            </span>
+            <img className="modal-image" src={"http://127.0.0.1" + image_url} />
+          </>
+        )}
       </div>
     </div>
   );
 };
 
 const styles = {
-  noteDivStyle: {
-    postion: "relative",
-    transform: "translateY(5vh)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "90vh",
-    width: "100vw",
-    overflow: "hidden",
-  },
-  contentArea: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "80vh",
-    width: "100vw",
-    overflow: "hidden",
-    justifyContent: "center",
-    backgroundColor: "lightblue",
-  },
-  noteImageStyle: {
-    width: "50vw",
-  },
-  noteImageStyleShow: {
-    height: "90vh",
-  },
-  modalContainer: {},
-  modalContainerShow: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.7)",
-    position: "fixed",
-    top: "0vh",
-    height: "90vh",
-    width: "100vw",
-    zIndex: 1000,
-  },
-  modal: {},
-  modalShow: {
-    width: "100vw",
-    height: "100vh",
-  },
-  modalClose: {
-    color: "white",
-  },
   controlsArea: {
     position: "absolute",
     display: "flex",
@@ -120,14 +75,7 @@ const styles = {
     backgroundColor: "lightcoral",
     // justifyContent: "center",
   },
-  toggleButton: {
-    padding: ".5rem",
-    backgroundColor: "black",
-    color: "white",
-    border: "none",
-    borderRadius: "0.25rem",
-    fontWeight: "700",
-  },
+
   deleteButtonStyle: {
     postion: "absolute",
     // bottom: "1rem",
@@ -137,20 +85,6 @@ const styles = {
     background: "transparent",
     textDecoration: "none",
     color: "red",
-  },
-  question: {
-    width: "100vw",
-    paddingInline: "1rem",
-    color: "rgb(39,47,62)",
-    fontWeight: "600",
-    fontSize: "2rem",
-  },
-  answer: {
-    width: "100vw",
-    paddingInline: "1rem",
-    color: "rgb(39,47,62)",
-    fontWeight: "600",
-    fontSize: "2rem",
   },
 };
 

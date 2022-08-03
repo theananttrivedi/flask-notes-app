@@ -59,6 +59,8 @@ const GroupPage = () => {
 
 const styles = {
   groupDivStyle: {
+    position: "fixed",
+    overflowY: "scroll",
     transform: "translateY(5vh)",
     height: "90vh",
     textAlign: "center",
