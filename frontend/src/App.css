@@ -1,0 +1,62 @@
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: local("☺"), url("./Inter/Inter_400_normal.ttf") format("truetype"); /* http://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Au-0.ttf" */
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100;
+
+  src: local("☺"), url("./Inter/Inter_100_normal.ttf") format("truetype"); /* http://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Au-0.ttf" */
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 200;
+  src: local("☺"), url("./Inter/Inter_200_normal.ttf") format("truetype"); /* http://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Au-0.ttf" */
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  src: local("☺"), url("./Inter/Inter_300_normal.ttf") format("truetype"); /* http://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Au-0.ttf" */
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+
+  src: local("☺"), url("./Inter/Inter_500_normal.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+
+  src: local("☺"), url("./Inter/Inter_600_normal.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+
+  src: local("☺"), url("./Inter/Inter_700_normal.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  src: local("☺"), url("./Inter/Inter_800_normal.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  src: local("☺"), url("./Inter/Inter_900_normal.ttf") format("truetype");
+}
+
+* {
+  font-family: "Inter";
+}

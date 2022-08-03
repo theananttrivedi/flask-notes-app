@@ -6,6 +6,17 @@ import HomePage from "./components/HomePage";
 import Navbar from "./components/Navbar";
 import NavigatorComponent from "./components/Navigator";
 import { RecoilRoot } from "recoil";
+import "./Inter/Inter_100_normal.ttf";
+import "./Inter/Inter_200_normal.ttf";
+import "./Inter/Inter_300_normal.ttf";
+import "./Inter/Inter_400_normal.ttf";
+import "./Inter/Inter_500_normal.ttf";
+import "./Inter/Inter_600_normal.ttf";
+import "./Inter/Inter_700_normal.ttf";
+import "./Inter/Inter_800_normal.ttf";
+import "./Inter/Inter_900_normal.ttf";
+import "./App.css";
+
 function App() {
   return (
     <div>
