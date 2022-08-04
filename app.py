@@ -7,8 +7,13 @@ from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
+from random import shuffle
+
+from json import dumps, loads
+
 UPLOAD_FOLDER = 'static/notes/images'
 UPLOAD_FOLDER_URL = '/static/notes/images'
+SEQUENTIAL_REVISION_FILES = 'static/notes/sequentialrevision'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
@@ -69,7 +74,56 @@ def note_response(note_record):
         'image_url': url_for('get_image_file', id_=note_record.id)
         }
     
-        
+  
+@app.route("/api/sequentialrevision")
+def sequentialrevision():
+	page=request.args.get('page', 1)
+	per_page=10
+	random = request.args.get("random", False)
+	if random == "true" or random == "True" or random == "t" or random == "T":
+		random = True
+	groups = request.args.get("groups")
+	groups = groups.split(',')
+	if "" in groups:
+		return {"error":"The Group String isn't formatted correctly"}
+	notes_collection = []
+	for group in groups:
+		print(group)
+		notes = Note.query.filter(Note.group.has(name=group)).all()
+		for note in notes:
+			notes_collection.append(note_response(note))
+
+
+	if random:
+		shuffle(notes_collection)
+
+	play_id = secrets.token_hex(10)
+	open(os.path.join(SEQUENTIAL_REVISION_FILES,"sequentialrevision-" + play_id + ".json"), 'w').write(dumps(notes_collection))
+
+	return {"play_id":play_id} 
+
+@app.route("/api/sequentialrevision/<play_id>")
+def sequentialrevision_play(play_id):
+	index = request.args.get('index', 0, int)
+	json_file = open(os.path.join(SEQUENTIAL_REVISION_FILES,"sequentialrevision-" + play_id + ".json"), 'r')
+	json_notes = loads(json_file.read())
+	next_ = ""
+	prev_ = ""
+	last_index_of_notes = len(json_notes) - 1
+	if index == 0:
+		prev_ = None
+	elif index!=0 and index - 1 >= 0:
+		prev_ = url_for("sequentialrevision_play", play_id=play_id, index=index - 1)
+
+
+
+	if index == last_index_of_notes:
+		next_ = None
+	elif index!=last_index_of_notes and index+1 <= last_index_of_notes:
+		next_ =  url_for("sequentialrevision_play", play_id=play_id, index=index + 1)
+	json_note = json_notes[index]
+	return {"note":json_note, "next": next_, "prev": prev_} 
+ 
 @app.route("/")
 def home():
     return "Welcome to home"
