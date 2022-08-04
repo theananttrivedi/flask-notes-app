@@ -1,5 +1,5 @@
 .note-component-container {
-  position: relative;
+  position: fixed;
   transform: translateY(5vh);
   display: flex;
   flex-direction: column;
@@ -12,6 +12,19 @@
     rgba(21, 21, 21, 1),
     rgba(21, 21, 21, 0.8)
   );
+}
+
+.note-delete-button {
+  position: fixed;
+  top: 0vh;
+  right: 0.2rem;
+  border: none;
+  padding: 0.75rem;
+  background: transparent;
+  text-decoration: none;
+  color: red;
+  z-index: 2000;
+  cursor: pointer;
 }
 .note-container {
   display: flex;
