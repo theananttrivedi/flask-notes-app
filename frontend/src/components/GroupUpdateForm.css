@@ -44,6 +44,7 @@
   position: fixed;
   bottom: 8vh;
   right: 2vw;
+  margin-right: 5vw;
   width: var(--button-text-length);
   height: var(--button-text-length);
   border-radius: 50%;

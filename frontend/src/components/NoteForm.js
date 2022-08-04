@@ -1,17 +1,20 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import "./NoteForm.css";
 const Note_CREATION_URL = "http://127.0.0.1/api/note";
 const NoteForm = ({ group }) => {
   const [question, setQuestion] = useState();
   const [answer, setAnswer] = useState();
   const [imagefile, setImagefile] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const questionOnChange = (e) => {
     setQuestion(e.target.value);
   };
   const answerOnChange = (e) => {
     setAnswer(e.target.value);
   };
+
+  const toggleShowForm = (e) => setShowForm(!showForm);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,30 +47,44 @@ const NoteForm = ({ group }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          name="question"
-          type={"text"}
-          onChange={questionOnChange}
-          placeholder="Question..."
-          value={question}
-        />
-        <input
-          name="answer"
-          type={"text"}
-          onChange={answerOnChange}
-          placeholder="Answer..."
-          value={answer}
-        />
-        <input
-          name="image"
-          type={"file"}
-          onChange={(e) => setImagefile(e.target.files[0])}
-        />
-        <input type={"submit"} value="Create Note" />
-      </form>
-    </div>
+    <>
+      {showForm && (
+        <div className="note-form-container">
+          <form className="note-form" onSubmit={onSubmit}>
+            <input
+              className="note-form-input"
+              name="question"
+              type={"text"}
+              onChange={questionOnChange}
+              placeholder="Question..."
+              value={question}
+            />
+            <input
+              className="note-form-input"
+              name="answer"
+              type={"text"}
+              onChange={answerOnChange}
+              placeholder="Answer..."
+              value={answer}
+            />
+            <input
+              className="note-form-input"
+              name="image"
+              type={"file"}
+              onChange={(e) => setImagefile(e.target.files[0])}
+            />
+            <input
+              className="note-form-submit-button"
+              type={"submit"}
+              value="Create Note"
+            />
+          </form>
+        </div>
+      )}
+      <div className="note-form-toggle-button" onClick={toggleShowForm}>
+        +
+      </div>
+    </>
   );
 };
 
