@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
 import "./NoteForm.css";
-const Note_CREATION_URL = "http://127.0.0.1/api/note";
+import { apiDomain } from "../config";
+const Note_CREATION_URL = apiDomain + "/api/note";
 const NoteForm = ({ group }) => {
   const [question, setQuestion] = useState();
   const [answer, setAnswer] = useState();

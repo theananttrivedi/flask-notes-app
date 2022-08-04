@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useNavigate } from "react-router-dom";
-
+import { apiDomain } from "../config";
 // {!showingImage && (
 //   <button className="note-delete-button" onClick={(e) => removeNote(id)}>
 //     Delete
@@ -62,7 +62,7 @@ const Note = ({ id, question, answer, image_url }) => {
                   <img
                     onClick={toggleImage}
                     className="note-image"
-                    src={"http://127.0.0.1" + image_url}
+                    src={apiDomain + image_url}
                   />
                 </div>
               )}
@@ -82,10 +82,7 @@ const Note = ({ id, question, answer, image_url }) => {
               </span>
               <TransformWrapper>
                 <TransformComponent>
-                  <img
-                    className="modal-image"
-                    src={"http://127.0.0.1" + image_url}
-                  />
+                  <img className="modal-image" src={apiDomain + image_url} />
                 </TransformComponent>
               </TransformWrapper>
             </>

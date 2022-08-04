@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-const Note_CREATION_URL = "http://127.0.0.1/api/note/";
+import { apiDomain } from "../config";
+const Note_CREATION_URL = apiDomain + "/api/note/";
 const NoteUpdateForm = ({ id, question, answer, image, group }) => {
   const [newquestion, setNewquestion] = useState(question);
   const [newanswer, setNewanswer] = useState(answer);

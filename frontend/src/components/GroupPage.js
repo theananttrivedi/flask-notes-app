@@ -6,8 +6,9 @@ import NoteListItem from "./NoteListItem";
 import GroupUpdateForm from "./GroupUpdateForm";
 import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
-const GROUP_URL = "http://127.0.0.1/api/group/";
-const GROUP_NAME_BY_ID_URL = "http://127.0.0.1/api/groupnamebyid/";
+import { apiDomain } from "../config";
+const GROUP_URL = apiDomain + "/api/group/";
+const GROUP_NAME_BY_ID_URL = apiDomain + "/api/groupnamebyid/";
 const GroupPage = () => {
   const { id } = useParams();
   const { search } = useLocation();

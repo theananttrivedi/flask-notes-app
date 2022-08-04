@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import groupsListAtom from "../atoms/groupsList";
 import "./GroupForm.css";
-const GROUP_CREATION_URL = "http://127.0.0.1/api/group";
+import { apiDomain } from "../config";
+const GROUP_CREATION_URL = apiDomain + "/api/group";
 const GroupForm = () => {
   const [name, setName] = useState();
   const [showForm, setShowForm] = useState(false);

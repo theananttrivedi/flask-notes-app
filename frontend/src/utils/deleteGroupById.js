@@ -1,7 +1,7 @@
 import axios from "axios";
-
+import { apiDomain } from "../config";
 const deleteGroupById = async (id) => {
-  let request = await axios.delete("http://127.0.0.1/api/group/" + id);
+  let request = await axios.delete(apiDomain + "/api/group/" + id);
   if (request.data) {
     return request.data;
   }

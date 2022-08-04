@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import currentPageTitle from "../atoms/currentPageTitle";
 import "./NoteListItem.css";
+import { apiDomain } from "../config";
 const truncate = (s, n = 15) => {
   let x = s;
   let noOfCharactersToDisplay = n;
@@ -27,10 +28,7 @@ const NoteListItem = ({ id, question, answer, image_url }) => {
 
         {image_url && (
           <div className="note-item-image-container">
-            <img
-              className="note-item-image"
-              src={"http://127.0.0.1" + image_url}
-            />
+            <img className="note-item-image" src={apiDomain + image_url} />
           </div>
         )}
       </Link>

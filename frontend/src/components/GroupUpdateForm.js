@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./GroupUpdateForm.css";
-const GROUP_CREATION_URL = "http://127.0.0.1/api/group/";
+import { apiDomain } from "../config";
+const GROUP_CREATION_URL = apiDomain + "/api/group/";
 const GroupUpdateForm = ({ id, name }) => {
   const [newname, setNewname] = useState();
   const [showForm, setShowForm] = useState(false);

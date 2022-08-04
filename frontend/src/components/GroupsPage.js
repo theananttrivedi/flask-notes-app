@@ -6,7 +6,8 @@ import GroupListItem from "./GroupListItem";
 import { useRecoilState } from "recoil";
 import groupsListAtom from "../atoms/groupsList";
 import "./GroupsPage.css";
-const GROUPS_URL = "http://127.0.0.1/api/groups";
+import { apiDomain } from "../config";
+const GROUPS_URL = apiDomain + "/api/groups";
 const GroupsPage = () => {
   const location = useLocation();
   const propsPassedViaLinkTag = location.state;

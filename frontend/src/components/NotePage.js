@@ -3,7 +3,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Note from "./Note";
 import NoteUpdateForm from "./NoteUpdateForm";
-const NOTE_URL = "http://127.0.0.1/api/note/";
+import { apiDomain } from "../config";
+const NOTE_URL = apiDomain + "/api/note/";
 const NotePage = () => {
   const { id } = useParams();
   const fetchNoteAndSetStateWithNote = async () => {
