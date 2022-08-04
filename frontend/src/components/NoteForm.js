@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import notesListAtom from "../atoms/notesList";
 import "./NoteForm.css";
 const Note_CREATION_URL = "http://127.0.0.1/api/note";
 const NoteForm = ({ group }) => {
@@ -7,6 +9,7 @@ const NoteForm = ({ group }) => {
   const [answer, setAnswer] = useState();
   const [imagefile, setImagefile] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [notesList, setNotesList] = useRecoilState(notesListAtom);
   const questionOnChange = (e) => {
     setQuestion(e.target.value);
   };
@@ -42,7 +45,7 @@ const NoteForm = ({ group }) => {
       headers: { "Content-Type": "multipart/form-data" },
     });
     if (response.data) {
-      console.log(response.data);
+      setNotesList([...notesList, response.data]);
     }
   };
 

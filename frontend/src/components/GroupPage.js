@@ -4,6 +4,8 @@ import { useParams, useLocation } from "react-router-dom";
 import NoteForm from "./NoteForm";
 import NoteListItem from "./NoteListItem";
 import GroupUpdateForm from "./GroupUpdateForm";
+import { useRecoilState } from "recoil";
+import notesListAtom from "../atoms/notesList";
 const GROUP_URL = "http://127.0.0.1/api/group/";
 const GROUP_NAME_BY_ID_URL = "http://127.0.0.1/api/groupnamebyid/";
 const GroupPage = () => {
@@ -11,6 +13,7 @@ const GroupPage = () => {
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const [groupname, setGroupname] = useState("");
+  const [notesList, setNotesList] = useRecoilState(notesListAtom);
   const fetchGroupAndSetStateWithGroup = async () => {
     console.log(query.get("page"));
     let url = GROUP_URL + id;
@@ -20,7 +23,7 @@ const GroupPage = () => {
     let response = await axios.get(url);
     if (response.data) {
       console.log(response.data);
-      setNotes(response.data.notes);
+      setNotesList(response.data.notes);
     }
   };
   const getGroupnameById = async (id) => {
@@ -36,12 +39,11 @@ const GroupPage = () => {
     getGroupnameById(id);
   }, []);
 
-  const [notes, setNotes] = useState([]);
   return (
     <div style={styles.groupDivContainerStyle}>
       <div style={styles.groupDivStyle}>
-        {notes &&
-          notes.map((note) => {
+        {notesList &&
+          notesList.map((note) => {
             return (
               <NoteListItem
                 id={note.id}

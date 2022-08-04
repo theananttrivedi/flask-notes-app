@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import groupsListAtom from "../atoms/groupsList";
 import "./GroupForm.css";
 const GROUP_CREATION_URL = "http://127.0.0.1/api/group";
 const GroupForm = () => {
   const [name, setName] = useState();
   const [showForm, setShowForm] = useState(false);
+  const [groupsList, setGroupsList] = useRecoilState(groupsListAtom);
   const nameOnChange = (e) => {
     setName(e.target.value);
   };
@@ -26,7 +29,7 @@ const GroupForm = () => {
       headers: { "Content-Type": "multipart/form-data" },
     });
     if (response.data) {
-      console.log(response.data);
+      setGroupsList([...groupsList, response.data]);
     }
   };
 
