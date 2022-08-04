@@ -19,7 +19,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div>
+    <div style={styles.contentArea}>
       <RecoilRoot>
         <Router>
           <NavigatorComponent />
@@ -38,11 +38,11 @@ function App() {
   );
 }
 
-// const styles = {
-//   contentArea: {
-//     positon: "relative",
-//     top: "10%",
-//   },
-// };
+const styles = {
+  contentArea: {
+    positon: "relative",
+    minHeight: "100vh",
+  },
+};
 
 export default App;

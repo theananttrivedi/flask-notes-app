@@ -38,31 +38,35 @@ const GroupPage = () => {
 
   const [notes, setNotes] = useState([]);
   return (
-    <div style={styles.groupDivStyle}>
-      <GroupUpdateForm id={id} name={groupname} />
+    <div style={styles.groupDivContainerStyle}>
+      <div style={styles.groupDivStyle}>
+        {notes &&
+          notes.map((note) => {
+            return (
+              <NoteListItem
+                id={note.id}
+                question={note.question}
+                answer={note.answer}
+                image_url={note.image_url ? note.image_url : null}
+              />
+            );
+          })}
+      </div>
+      {/* <GroupUpdateForm id={id} name={groupname} /> */}
       {groupname && <NoteForm group={groupname} />}
-
-      {notes &&
-        notes.map((note) => {
-          return (
-            <NoteListItem
-              id={note.id}
-              question={note.question}
-              answer={note.answer}
-              image_url={note.image_url ? note.image_url : null}
-            />
-          );
-        })}
     </div>
   );
 };
 
 const styles = {
+  groupDivContainerStyle: {
+    maxHeight: "90vh",
+  },
   groupDivStyle: {
     position: "fixed",
     overflowY: "scroll",
-    transform: "translateY(5vh)",
-    height: "90vh",
+    top: "5vh",
+    maxHeight: "90vh",
     textAlign: "center",
     background: `linear-gradient(
       to bottom right,

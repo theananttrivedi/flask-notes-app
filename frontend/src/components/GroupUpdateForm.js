@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import "./GroupUpdateForm.css";
 const GROUP_CREATION_URL = "http://127.0.0.1/api/group/";
 const GroupUpdateForm = ({ id, name }) => {
   const [newname, setNewname] = useState();
+  const [showForm, setShowForm] = useState(false);
   const newnameOnChange = (e) => {
     setNewname(e.target.value);
   };
+
+  const toggleShowForm = (e) => setShowForm(!showForm);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,18 +35,30 @@ const GroupUpdateForm = ({ id, name }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          name="name"
-          type={"text"}
-          onChange={newnameOnChange}
-          placeholder="Name..."
-          value={newname}
-        />
-        <input type={"submit"} value="Update Group" />
-      </form>
-    </div>
+    <>
+      <div className="group-update-form-container">
+        {showForm && (
+          <form className="group-update-form" onSubmit={onSubmit}>
+            <input
+              className="group-update-form-input"
+              name="name"
+              type={"text"}
+              onChange={newnameOnChange}
+              placeholder="Name..."
+              value={newname}
+            />
+            <input
+              className="group-update-form-submit-button"
+              type={"submit"}
+              value="Update Group"
+            />
+          </form>
+        )}{" "}
+      </div>
+      <div className="group-update-form-toggle-button" onClick={toggleShowForm}>
+        +
+      </div>
+    </>
   );
 };
 
