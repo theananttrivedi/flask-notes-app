@@ -24,7 +24,7 @@ const styles = {
     height: "5vh",
     position: "fixed",
     bottom: "0",
-    backgroundColor: "rgba(39,47,62,0.2)",
+    backgroundColor: "rgb(224,224,224)",
     backdropFilter: "blur(2rem)",
     zIndex: 1000,
   },

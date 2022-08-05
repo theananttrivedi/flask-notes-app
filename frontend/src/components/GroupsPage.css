@@ -1,5 +1,6 @@
 .group-container {
   position: fixed;
+  width: 100vw;
   transform: translateY(5vh);
   height: calc((100% - 100vh) + 90vh);
   background: linear-gradient(

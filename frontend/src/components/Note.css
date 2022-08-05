@@ -24,9 +24,10 @@
   justify-content: center;
 }
 .note-image-container {
-  --img-width-size: 66vw;
-  --img-height-size: min(66vw, 100vw);
+  --img-width-size: 64vw;
+  --img-height-size: min(64vw, 100vw);
   margin-top: 4rem;
+  margin-bottom: 4rem;
   width: var(--img-width-size);
   height: var(--img-height-size);
 }
@@ -93,7 +94,8 @@
 }
 /* 1200 1349 */
 .modal-image {
-  height: 90vh;
+  height: calc(90vh - 60px);
+  width: auto;
 }
 
 .answer-toggle-button {
