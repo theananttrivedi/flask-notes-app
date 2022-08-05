@@ -23,10 +23,15 @@ const Note = ({ id, question, answer, image_url }) => {
       });
     }
 
+    if ((id !== undefined || id !== null) && showingImage) {
+      setFunctionButton({ func: null, title: "", component: null });
+    }
+
     return () => {
       setFunctionButton({ func: null, title: "", component: null });
     };
-  }, []);
+  }, [showingImage]);
+
   const toggleAnswer = () => {
     if (showingAnswer) {
       setShowingAnswer(false);

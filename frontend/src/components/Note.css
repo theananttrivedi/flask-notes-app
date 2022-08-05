@@ -69,7 +69,7 @@
 .modal {
   position: fixed;
   top: 5vh;
-  height: 90vh;
+  height: calc((100% - 100vh) + 90vh);
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   justify-content: center;
@@ -91,7 +91,7 @@
   cursor: pointer;
   z-index: 2000;
 }
-
+/* 1200 1349 */
 .modal-image {
   height: 90vh;
 }
