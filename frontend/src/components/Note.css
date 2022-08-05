@@ -7,37 +7,25 @@
   height: 90vh;
   width: 100vw;
   overflow: hidden;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom right,
     rgba(21, 21, 21, 1),
     rgba(21, 21, 21, 0.8)
-  );
+  ); */
 }
 
-.note-delete-button {
-  position: fixed;
-  top: 0vh;
-  right: 0.2rem;
-  border: none;
-  padding: 0.75rem;
-  background: transparent;
-  text-decoration: none;
-  color: red;
-  z-index: 2000;
-  cursor: pointer;
-}
 .note-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  height: 75vh;
   width: 100vw;
   overflow: hidden;
   justify-content: center;
 }
 .note-image-container {
-  --img-width-size: 70vw;
-  --img-height-size: min(70vw, 100vw);
+  --img-width-size: 66vw;
+  --img-height-size: min(66vw, 100vw);
   margin-top: 4rem;
   width: var(--img-width-size);
   height: var(--img-height-size);
@@ -45,8 +33,8 @@
 
 @media screen and (min-width: 26rem) {
   .note-image-container {
-    --img-width-size: 17.5rem;
-    --img-height-size: 17.5rem;
+    --img-width-size: 16.8rem;
+    --img-height-size: 16.8rem;
   }
 }
 .note-image {
@@ -80,9 +68,9 @@
 
 .modal {
   position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
+  top: 5vh;
+  height: 90vh;
+  width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   justify-content: center;
   align-items: center;

@@ -79,20 +79,20 @@ const Note = ({ id, question, answer, image_url }) => {
             {!showingAnswer ? "Show Answer" : "Hide Answer"}
           </div>
         </div>
-        <div className={showingImage ? "modal active" : "modal"}>
-          {image_url && showingImage && (
-            <>
-              <span onClick={toggleImage} className="modal-close">
-                &times;
-              </span>
-              <TransformWrapper>
-                <TransformComponent>
-                  <img className="modal-image" src={apiDomain + image_url} />
-                </TransformComponent>
-              </TransformWrapper>
-            </>
-          )}
-        </div>
+      </div>{" "}
+      <div className={showingImage ? "modal active" : "modal"}>
+        {image_url && showingImage && (
+          <>
+            <span onClick={toggleImage} className="modal-close">
+              &times;
+            </span>
+            <TransformWrapper>
+              <TransformComponent>
+                <img className="modal-image" src={apiDomain + image_url} />
+              </TransformComponent>
+            </TransformWrapper>
+          </>
+        )}
       </div>
     </>
   );

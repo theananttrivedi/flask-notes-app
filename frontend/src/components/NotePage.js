@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import currentPageTitle from "../atoms/currentPageTitle";
 import { apiDomain } from "../config";
 import previousPageTitle from "../atoms/previousPageTitle";
+import loadingAtom from "../atoms/loading";
+import FadeLoader from "react-spinners/FadeLoader";
 import truncate from "../utils/truncate";
 const NOTE_URL = apiDomain + "/api/note/";
 const NotePage = () => {
@@ -15,6 +17,7 @@ const NotePage = () => {
   const [note, setNote] = useState({});
   [_, setTitle] = useRecoilState(currentPageTitle);
   [_, setPrevTitle] = useRecoilState(previousPageTitle);
+  const [loading, setLoading] = useRecoilState(loadingAtom);
   useEffect(() => {
     if (note && note.question) {
       setTitle(note.id + " : " + truncate(note.question, 20));
@@ -28,12 +31,17 @@ const NotePage = () => {
     let response = await axios.get(NOTE_URL + id);
     if (response.data) {
       setNote({ ...response.data });
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchNoteAndSetStateWithNote();
   }, []);
-
+  useEffect(() => {
+    return () => {
+      setLoading(true);
+    };
+  }, []);
   return (
     <>
       <div style={styles.noteContainer}>
@@ -45,13 +53,25 @@ const NotePage = () => {
         image={note.image_url}
         group={note.group}
       /> */}
-        {note && (
-          <Note
-            id={note.id}
-            question={note.question}
-            answer={note.answer}
-            image_url={note.image_url}
+        {loading ? (
+          <FadeLoader
+            color="rgb(6, 123, 192)"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
           />
+        ) : (
+          note && (
+            <Note
+              id={note.id}
+              question={note.question}
+              answer={note.answer}
+              image_url={note.image_url}
+            />
+          )
         )}
       </div>
     </>
@@ -61,8 +81,15 @@ const NotePage = () => {
 const styles = {
   noteContainer: {
     display: "flex",
-    postion: "fixed",
+    width: "100vw",
+    position: "fixed",
+    height: "90vh",
     top: "5vh",
+    background: `linear-gradient(
+      to bottom right,
+      rgba(21, 21, 21, 1),
+      rgba(21, 21, 21, 0.8)
+    )`,
   },
 };
 
