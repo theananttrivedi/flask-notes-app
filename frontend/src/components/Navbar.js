@@ -1,18 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import currentPageTitle from "../atoms/currentPageTitle";
-// import previousPageTitle from "../atoms/previousPageTitle";
+import { Link } from "react-router-dom";
 const Navbar = () => {
-  const navigate = useNavigate();
-  const [title, setTitle] = useRecoilState(currentPageTitle);
   return (
     <div style={styles.container}>
-      {/* {title === "Home" ? null : (
-        <button style={styles.button} onClick={() => navigate(-1)}>
-          {"<Back"}
-        </button>
-      )} */}
-
       <div style={styles.navlinksContainer}>
         {" "}
         <Link style={styles.link} to={"/"}>
@@ -39,14 +28,7 @@ const styles = {
     backdropFilter: "blur(2rem)",
     zIndex: 1000,
   },
-  button: {
-    paddingLeft: "1rem",
-    border: "none",
-    backgroundColor: "transparent",
-    color: "rgb(6,123,192)",
-    fontWeight: "400",
-    fontSize: "1rem",
-  },
+
   link: {
     color: "rgb(6,123,192)",
     fontWeight: "400",

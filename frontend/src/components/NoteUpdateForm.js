@@ -37,12 +37,7 @@ const NoteUpdateForm = ({ id, question, answer, image, group }) => {
     if (f) {
       noteData.append("image", f);
     }
-    console.log({
-      question: q,
-      answer: a,
-      group: g,
-      image: f,
-    });
+
     let response = await axios({
       method: "put",
       url: Note_CREATION_URL + id,

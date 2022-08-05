@@ -1,23 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import currentPageTitle from "../atoms/currentPageTitle";
 import "./NoteListItem.css";
 import { apiDomain } from "../config";
-const truncate = (s, n = 15) => {
-  let x = s;
-  let noOfCharactersToDisplay = n;
-  if (x.length > noOfCharactersToDisplay) {
-    return x.slice(0, noOfCharactersToDisplay) + "...";
-  } else {
-    return x + "...";
-  }
-};
-const NoteListItem = ({ id, question, answer, image_url }) => {
-  const [title, setTitle] = useRecoilState(currentPageTitle);
+import truncate from "../utils/truncate";
+
+const NOTE_REACT_URL = "/note/";
+const NoteListItem = ({ id, question, image_url }) => {
   return (
     <div className="note-item-container">
-      <Link className="note-item-link" to={"/note/" + id}>
+      <Link className="note-item-link" to={NOTE_REACT_URL + id}>
         <p className="text-block">{truncate(question, 25)}</p>
 
         {image_url && (
@@ -29,7 +20,5 @@ const NoteListItem = ({ id, question, answer, image_url }) => {
     </div>
   );
 };
-
-const styles = {};
 
 export default NoteListItem;

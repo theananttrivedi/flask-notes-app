@@ -9,7 +9,6 @@ const HomePage = () => {
   return (
     <>
       <div style={styles.container}>HomePage</div>
-      <p style={styles.homeButton}>Hello</p>
     </>
   );
 };

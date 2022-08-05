@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import groupsListAtom from "../atoms/groupsList";
 import "./GroupForm.css";
@@ -9,12 +9,11 @@ const GroupForm = () => {
   const [name, setName] = useState();
   const [showForm, setShowForm] = useState(false);
   const [groupsList, setGroupsList] = useRecoilState(groupsListAtom);
+
   const nameOnChange = (e) => {
     setName(e.target.value);
   };
-
   const toggleShowForm = (e) => setShowForm(!showForm);
-
   const onSubmit = (e) => {
     e.preventDefault();
     requestApiToCreateAGroup(name);
@@ -31,6 +30,7 @@ const GroupForm = () => {
     });
     if (response.data) {
       setGroupsList([...groupsList, response.data]);
+      setName("");
     }
   };
 

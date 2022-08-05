@@ -1,15 +1,14 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import currentPageTitle from "../atoms/currentPageTitle";
 import previousPageTitle from "../atoms/previousPageTitle";
 import functionButtonAtom from "../atoms/functionButton";
 const Navigator = () => {
+  let title, functionButton, _;
   const navigate = useNavigate();
-  //   const location = useLocation();
-  const [title, setTitle] = useRecoilState(currentPageTitle);
+  [title, _] = useRecoilState(currentPageTitle);
   const [prevTitle, setPrevTitle] = useRecoilState(previousPageTitle);
-  const [functionButton, setFunctionButton] =
-    useRecoilState(functionButtonAtom);
+  [functionButton, _] = useRecoilState(functionButtonAtom);
   return (
     <div style={styles.container}>
       {prevTitle && (
@@ -58,8 +57,8 @@ const styles = {
   },
   previous: {
     color: "rgb(6,123,192)",
-    fontWeight: "400",
-    fontSize: ".9rem",
+    fontWeight: "300",
+    fontSize: "1rem",
     marginLeft: ".4rem",
     cursor: "pointer",
     zIndex: 4000,
@@ -68,19 +67,12 @@ const styles = {
     position: "absolute",
     right: "0rem",
     color: "red",
-    fontWeight: "400",
+    fontWeight: "300",
     marginRight: "1rem",
-    fontSize: ".9rem",
+    fontSize: ".7rem",
     marginLeft: "0rem",
     cursor: "pointer",
     zIndex: 4000,
-  },
-  button: {
-    border: "none",
-    backgroundColor: "transparent",
-    color: "rgb(6,123,192)",
-    fontWeight: "400",
-    fontSize: "1rem",
   },
 };
 

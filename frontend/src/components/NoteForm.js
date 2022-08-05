@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
 import "./NoteForm.css";
@@ -18,7 +18,12 @@ const NoteForm = ({ group }) => {
     setAnswer(e.target.value);
   };
 
-  const toggleShowForm = (e) => setShowForm(!showForm);
+  const toggleShowForm = (e) => {
+    setShowForm(!showForm);
+    setQuestion("");
+    setAnswer("");
+    setImagefile(null);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -33,12 +38,6 @@ const NoteForm = ({ group }) => {
     if (f) {
       noteData.append("image", f);
     }
-    console.log({
-      question: q,
-      answer: a,
-      group: g,
-      image: f,
-    });
     let response = await axios({
       method: "post",
       url: Note_CREATION_URL,

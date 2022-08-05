@@ -9,8 +9,8 @@ import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
 import currentPageTitle from "../atoms/currentPageTitle";
 import { apiDomain } from "../config";
-const GROUP_URL = apiDomain + "/api/group/";
 
+const GROUP_URL = apiDomain + "/api/group/";
 const GROUP_NAME_BY_ID_URL = apiDomain + "/api/groupnamebyid/";
 const GroupPage = () => {
   const { id } = useParams();
@@ -18,27 +18,23 @@ const GroupPage = () => {
   const query = new URLSearchParams(search);
   const [groupname, setGroupname] = useState("");
   const [notesList, setNotesList] = useRecoilState(notesListAtom);
-  const [title, setTitle] = useRecoilState(currentPageTitle);
+  const [_, setTitle] = useRecoilState(currentPageTitle);
   useEffect(() => {
     setTitle("Group: " + groupname);
   }, [groupname]);
   const fetchGroupAndSetStateWithGroup = async () => {
-    console.log(query.get("page"));
     let url = GROUP_URL + id;
     if (query.get("page")) {
       url += "?page=" + query.get("page");
     }
     let response = await axios.get(url);
     if (response.data) {
-      console.log(response.data);
       setNotesList(response.data.notes);
     }
   };
   const getGroupnameById = async (id) => {
-    let url = GROUP_NAME_BY_ID_URL + id;
-    let response = await axios.get(url);
+    let response = await axios.get(GROUP_NAME_BY_ID_URL + id);
     if (response.data) {
-      console.log(response.data);
       setGroupname(response.data.name);
     }
   };
@@ -67,7 +63,5 @@ const GroupPage = () => {
     </div>
   );
 };
-
-const styles = {};
 
 export default GroupPage;

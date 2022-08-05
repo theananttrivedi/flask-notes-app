@@ -1,12 +1,11 @@
 import deleteGroupById from "../utils/deleteGroupById";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import currentPageTitle from "../atoms/currentPageTitle";
 import groupsListAtom from "../atoms/groupsList";
 import "./GroupListItem.css";
+const GROUP_URL_REACT_PAGE = "/group/";
 const GroupListItem = ({ id, name }) => {
   const [groupsList, setGroupsList] = useRecoilState(groupsListAtom);
-  const [title, setTitle] = useRecoilState(currentPageTitle);
   const removeGroup = (id) => {
     deleteGroupById(id);
     setGroupsList(
@@ -18,7 +17,7 @@ const GroupListItem = ({ id, name }) => {
   return (
     <div className="list-item-container">
       <div className="container">
-        <Link className="link" to={"/group/" + id}>
+        <Link className="link" to={GROUP_URL_REACT_PAGE + id}>
           {name}
         </Link>
       </div>
@@ -28,7 +27,5 @@ const GroupListItem = ({ id, name }) => {
     </div>
   );
 };
-
-const styles = {};
 
 export default GroupListItem;

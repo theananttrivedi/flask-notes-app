@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import axios from "axios";
 import GroupForm from "./GroupForm";
 import GroupListItem from "./GroupListItem";
@@ -10,10 +9,8 @@ import "./GroupsPage.css";
 import { apiDomain } from "../config";
 const GROUPS_URL = apiDomain + "/api/groups";
 const GroupsPage = () => {
-  const location = useLocation();
-  const propsPassedViaLinkTag = location.state;
   const [groupsList, setGroupsList] = useRecoilState(groupsListAtom);
-  const [title, setTitle] = useRecoilState(currentPageTitle);
+  const [_, setTitle] = useRecoilState(currentPageTitle);
   useEffect(() => {
     setTitle("Groups");
   }, []);
@@ -24,7 +21,6 @@ const GroupsPage = () => {
     }
   };
   useEffect(() => {
-    console.log(propsPassedViaLinkTag);
     fetchGroupsAndSetStateWithGroups();
   }, []);
   return (
@@ -39,7 +35,5 @@ const GroupsPage = () => {
     </div>
   );
 };
-
-const styles = {};
 
 export default GroupsPage;

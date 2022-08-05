@@ -7,18 +7,12 @@ import functionButtonAtom from "../atoms/functionButton";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useNavigate } from "react-router-dom";
 import { apiDomain } from "../config";
-// {!showingImage && (
-//   <button className="note-delete-button" onClick={(e) => removeNote(id)}>
-//     Delete
-//   </button>
-// )}
 
 const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
   const [notesList, setNotesList] = useRecoilState(notesListAtom);
-  const [functionButton, setFunctionButton] =
-    useRecoilState(functionButtonAtom);
+  const [_, setFunctionButton] = useRecoilState(functionButtonAtom);
   const navigate = useNavigate();
   useEffect(() => {
     if (id !== undefined || id !== null) {
@@ -57,12 +51,6 @@ const Note = ({ id, question, answer, image_url }) => {
 
   return (
     <>
-      {/* {!showingImage && (
-        <button className="note-delete-button" onClick={(e) => removeNote(id)}>
-          Delete
-        </button>
-      )} */}
-
       <div className="note-component-container">
         <div className="note-container">
           {!showingAnswer ? (
@@ -105,7 +93,5 @@ const Note = ({ id, question, answer, image_url }) => {
     </>
   );
 };
-
-const styles = {};
 
 export default Note;

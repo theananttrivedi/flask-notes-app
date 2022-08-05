@@ -7,24 +7,16 @@ import { useRecoilState } from "recoil";
 import currentPageTitle from "../atoms/currentPageTitle";
 import { apiDomain } from "../config";
 import previousPageTitle from "../atoms/previousPageTitle";
+import truncate from "../utils/truncate";
 const NOTE_URL = apiDomain + "/api/note/";
-const truncate = (s, n = 15) => {
-  let x = s;
-  let noOfCharactersToDisplay = n;
-  if (x.length > noOfCharactersToDisplay) {
-    return x.slice(0, noOfCharactersToDisplay) + "...";
-  } else {
-    return x + "...";
-  }
-};
 const NotePage = () => {
+  let setTitle, setPrevTitle, _;
   const { id } = useParams();
   const [note, setNote] = useState({});
-  const [title, setTitle] = useRecoilState(currentPageTitle);
-  const [prevTitle, setPrevTitle] = useRecoilState(previousPageTitle);
+  [_, setTitle] = useRecoilState(currentPageTitle);
+  [_, setPrevTitle] = useRecoilState(previousPageTitle);
   useEffect(() => {
     if (note && note.question) {
-      console.log({ question: note.question });
       setTitle(note.id + " : " + truncate(note.question, 20));
       setPrevTitle("< " + note.group);
     }
@@ -35,7 +27,6 @@ const NotePage = () => {
   const fetchNoteAndSetStateWithNote = async () => {
     let response = await axios.get(NOTE_URL + id);
     if (response.data) {
-      console.log(response.data);
       setNote({ ...response.data });
     }
   };
@@ -72,17 +63,6 @@ const styles = {
     display: "flex",
     postion: "fixed",
     top: "5vh",
-  },
-  noteDeleteButton: {
-    position: "absolute",
-    top: "0",
-    right: "0.2rem",
-    border: "none",
-    padding: "0.75rem",
-    background: "transparent",
-    textDecoration: "none",
-    color: "red",
-    zIndex: "5000",
   },
 };
 
