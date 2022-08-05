@@ -31,6 +31,7 @@ const GroupForm = () => {
     if (response.data) {
       setGroupsList([...groupsList, response.data]);
       setName("");
+      setShowForm(false);
     }
   };
 
