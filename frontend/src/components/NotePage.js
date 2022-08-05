@@ -3,10 +3,35 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Note from "./Note";
 import NoteUpdateForm from "./NoteUpdateForm";
+import { useRecoilState } from "recoil";
+import currentPageTitle from "../atoms/currentPageTitle";
 import { apiDomain } from "../config";
+import previousPageTitle from "../atoms/previousPageTitle";
 const NOTE_URL = apiDomain + "/api/note/";
+const truncate = (s, n = 15) => {
+  let x = s;
+  let noOfCharactersToDisplay = n;
+  if (x.length > noOfCharactersToDisplay) {
+    return x.slice(0, noOfCharactersToDisplay) + "...";
+  } else {
+    return x + "...";
+  }
+};
 const NotePage = () => {
   const { id } = useParams();
+  const [note, setNote] = useState({});
+  const [title, setTitle] = useRecoilState(currentPageTitle);
+  const [prevTitle, setPrevTitle] = useRecoilState(previousPageTitle);
+  useEffect(() => {
+    if (note && note.question) {
+      console.log({ question: note.question });
+      setTitle(note.id + " : " + truncate(note.question, 20));
+      setPrevTitle("< " + note.group);
+    }
+    return () => {
+      setPrevTitle(null);
+    };
+  }, [note]);
   const fetchNoteAndSetStateWithNote = async () => {
     let response = await axios.get(NOTE_URL + id);
     if (response.data) {
@@ -17,7 +42,7 @@ const NotePage = () => {
   useEffect(() => {
     fetchNoteAndSetStateWithNote();
   }, []);
-  const [note, setNote] = useState({});
+
   return (
     <>
       <div style={styles.noteContainer}>

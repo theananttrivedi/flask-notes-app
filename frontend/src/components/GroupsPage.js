@@ -5,6 +5,7 @@ import GroupForm from "./GroupForm";
 import GroupListItem from "./GroupListItem";
 import { useRecoilState } from "recoil";
 import groupsListAtom from "../atoms/groupsList";
+import currentPageTitle from "../atoms/currentPageTitle";
 import "./GroupsPage.css";
 import { apiDomain } from "../config";
 const GROUPS_URL = apiDomain + "/api/groups";
@@ -12,6 +13,10 @@ const GroupsPage = () => {
   const location = useLocation();
   const propsPassedViaLinkTag = location.state;
   const [groupsList, setGroupsList] = useRecoilState(groupsListAtom);
+  const [title, setTitle] = useRecoilState(currentPageTitle);
+  useEffect(() => {
+    setTitle("Groups");
+  }, []);
   const fetchGroupsAndSetStateWithGroups = async () => {
     let response = await axios.get(GROUPS_URL);
     if (response.data) {

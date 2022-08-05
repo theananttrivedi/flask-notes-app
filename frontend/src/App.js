@@ -24,14 +24,14 @@ function App() {
         <Router>
           <NavigatorComponent />
           <Navbar />
-          {/* <div style={styles.contentArea}> */}
-          <Routes>
-            <Route path="/" exact element={<HomePage />} />
-            <Route path="/groups" element={<GroupsPage />} />
-            <Route path="/group/:id" element={<GroupPage />} />
-            <Route path="/note/:id" element={<NotePage />} />
-          </Routes>
-          {/* </div> */}
+          <div style={styles.contentArea}>
+            <Routes>
+              <Route path="/" exact element={<HomePage />} />
+              <Route path="/groups" element={<GroupsPage />} />
+              <Route path="/group/:id" element={<GroupPage />} />
+              <Route path="/note/:id" element={<NotePage />} />
+            </Routes>
+          </div>
         </Router>
       </RecoilRoot>
     </div>
@@ -40,8 +40,11 @@ function App() {
 
 const styles = {
   contentArea: {
-    positon: "relative",
-    minHeight: "100vh",
+    // position: "fixed",
+    // top: "5vh",
+    // width: "100vw",
+    // minHeight: "90vh",
+    // backgroundColor: "lightcoral",
   },
 };
 

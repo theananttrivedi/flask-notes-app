@@ -18,11 +18,7 @@ const GroupListItem = ({ id, name }) => {
   return (
     <div className="list-item-container">
       <div className="container">
-        <Link
-          className="link"
-          onClick={(e) => setTitle("Group: " + name)}
-          to={"/group/" + id}
-        >
+        <Link className="link" to={"/group/" + id}>
           {name}
         </Link>
       </div>

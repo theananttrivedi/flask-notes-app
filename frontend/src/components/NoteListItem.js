@@ -17,13 +17,7 @@ const NoteListItem = ({ id, question, answer, image_url }) => {
   const [title, setTitle] = useRecoilState(currentPageTitle);
   return (
     <div className="note-item-container">
-      <Link
-        className="note-item-link"
-        onClick={(e) =>
-          setTitle("Note: " + "(" + id + ") " + truncate(question))
-        }
-        to={"/note/" + id}
-      >
+      <Link className="note-item-link" to={"/note/" + id}>
         <p className="text-block">{truncate(question, 25)}</p>
 
         {image_url && (

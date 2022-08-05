@@ -15,24 +15,10 @@ const Navbar = () => {
 
       <div style={styles.navlinksContainer}>
         {" "}
-        <Link
-          style={styles.link}
-          onClick={() => {
-            setTitle("Home");
-          }}
-          to={"/"}
-        >
+        <Link style={styles.link} to={"/"}>
           Home
         </Link>
-        <Link
-          style={styles.link}
-          to={"/groups"}
-          onClick={() => {
-            const titleToBeSet = "Groups";
-            if (title === titleToBeSet) return;
-            setTitle(titleToBeSet);
-          }}
-        >
+        <Link style={styles.link} to={"/groups"}>
           Groups
         </Link>
       </div>

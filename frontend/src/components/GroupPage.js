@@ -2,12 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import NoteForm from "./NoteForm";
+import "./GroupPage.css";
 import NoteListItem from "./NoteListItem";
 import GroupUpdateForm from "./GroupUpdateForm";
 import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
+import currentPageTitle from "../atoms/currentPageTitle";
 import { apiDomain } from "../config";
 const GROUP_URL = apiDomain + "/api/group/";
+
 const GROUP_NAME_BY_ID_URL = apiDomain + "/api/groupnamebyid/";
 const GroupPage = () => {
   const { id } = useParams();
@@ -15,6 +18,10 @@ const GroupPage = () => {
   const query = new URLSearchParams(search);
   const [groupname, setGroupname] = useState("");
   const [notesList, setNotesList] = useRecoilState(notesListAtom);
+  const [title, setTitle] = useRecoilState(currentPageTitle);
+  useEffect(() => {
+    setTitle("Group: " + groupname);
+  }, [groupname]);
   const fetchGroupAndSetStateWithGroup = async () => {
     console.log(query.get("page"));
     let url = GROUP_URL + id;
@@ -41,8 +48,8 @@ const GroupPage = () => {
   }, []);
 
   return (
-    <div style={styles.groupDivContainerStyle}>
-      <div style={styles.groupDivStyle}>
+    <div className="groupDivContainerStyle">
+      <div className="groupDivStyle">
         {notesList &&
           notesList.map((note) => {
             return (
@@ -61,22 +68,6 @@ const GroupPage = () => {
   );
 };
 
-const styles = {
-  groupDivContainerStyle: {
-    maxHeight: "90vh",
-  },
-  groupDivStyle: {
-    position: "fixed",
-    overflowY: "scroll",
-    top: "5vh",
-    maxHeight: "90vh",
-    textAlign: "center",
-    background: `linear-gradient(
-      to bottom right,
-      rgba(21, 21, 21, 1),
-      rgba(21, 21, 21, 0.8)
-    )`,
-  },
-};
+const styles = {};
 
 export default GroupPage;

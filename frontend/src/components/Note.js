@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import deleteNoteById from "../utils/deleteNoteById";
 import "./Note.css";
 import { useRecoilState } from "recoil";
 import notesListAtom from "../atoms/notesList";
+import functionButtonAtom from "../atoms/functionButton";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useNavigate } from "react-router-dom";
 import { apiDomain } from "../config";
@@ -16,7 +17,18 @@ const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
   const [notesList, setNotesList] = useRecoilState(notesListAtom);
+  const [functionButton, setFunctionButton] =
+    useRecoilState(functionButtonAtom);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (id !== undefined || id !== null) {
+      setFunctionButton({ func: () => removeNote(id), title: "Delete" });
+    }
+
+    return () => {
+      setFunctionButton({ func: null, title: "" });
+    };
+  }, []);
   const toggleAnswer = () => {
     if (showingAnswer) {
       setShowingAnswer(false);
@@ -42,13 +54,14 @@ const Note = ({ id, question, answer, image_url }) => {
     );
     navigate(-1);
   };
+
   return (
     <>
-      {!showingImage && (
+      {/* {!showingImage && (
         <button className="note-delete-button" onClick={(e) => removeNote(id)}>
           Delete
         </button>
-      )}
+      )} */}
 
       <div className="note-component-container">
         <div className="note-container">
