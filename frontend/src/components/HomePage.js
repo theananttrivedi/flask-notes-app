@@ -4,7 +4,7 @@ import currentPageTitle from "../atoms/currentPageTitle";
 const HomePage = () => {
   const [title, setTitle] = useRecoilState(currentPageTitle);
   useEffect(() => {
-    setTitle("Home");
+    setTitle("Notesify");
   }, []);
   return (
     <>
@@ -30,7 +30,7 @@ const HomePage = () => {
 
 const styles = {
   container: {
-    height: "90vh",
+    height: "calc((100% - 100vh) + 90vh)",
     position: "fixed",
     background: `linear-gradient(
       to bottom right,
@@ -59,8 +59,9 @@ const styles = {
   coverimg2: {
     width: "80vw",
     position: "fixed",
-    bottom: 0,
+    bottom: "5vh",
     left: "0",
+    overflow: "hidden",
   },
 };
 

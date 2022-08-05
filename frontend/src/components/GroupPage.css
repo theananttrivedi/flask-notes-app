@@ -2,7 +2,7 @@
   position: fixed;
   width: 100vw;
   top: 5vh;
-  height: 90vh;
+  height: calc((100% - 100vh) + 90vh);
   background: linear-gradient(
     to bottom right,
     rgba(21, 21, 21, 1),
@@ -10,9 +10,10 @@
   );
 }
 .groupDivStyle {
+  position: fixed;
   overflow-y: scroll;
   top: 5vh;
-  height: 90vh;
+  height: calc((100% - 100vh) + 90vh);
   text-align: center;
   background: linear-gradient(
     to bottom right,

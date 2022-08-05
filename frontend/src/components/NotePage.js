@@ -83,7 +83,7 @@ const styles = {
     display: "flex",
     width: "100vw",
     position: "fixed",
-    height: "90vh",
+    height: " calc((100% - 100vh) + 90vh)",
     top: "5vh",
     background: `linear-gradient(
       to bottom right,
