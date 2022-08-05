@@ -25,7 +25,11 @@ const Navigator = () => {
       <div style={styles.title}>{title}</div>
       {functionButton.func && functionButton.title && (
         <div style={styles.functionButton} onClick={functionButton.func}>
-          {functionButton.title}
+          {functionButton.component ? (
+            <functionButton.component style={{ fontSize: "1rem" }} />
+          ) : (
+            functionButton.title
+          )}
         </div>
       )}
     </div>

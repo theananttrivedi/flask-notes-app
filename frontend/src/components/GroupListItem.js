@@ -2,6 +2,7 @@ import deleteGroupById from "../utils/deleteGroupById";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import groupsListAtom from "../atoms/groupsList";
+import { MdOutlineDelete } from "react-icons/md";
 import "./GroupListItem.css";
 const GROUP_URL_REACT_PAGE = "/group/";
 const GroupListItem = ({ id, name }) => {
@@ -22,7 +23,7 @@ const GroupListItem = ({ id, name }) => {
         </Link>
       </div>
       <button className="group-delete-button" onClick={(e) => removeGroup(id)}>
-        Delete
+        <MdOutlineDelete />
       </button>
     </div>
   );

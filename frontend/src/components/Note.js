@@ -7,7 +7,7 @@ import functionButtonAtom from "../atoms/functionButton";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useNavigate } from "react-router-dom";
 import { apiDomain } from "../config";
-
+import { MdOutlineDelete } from "react-icons/md";
 const Note = ({ id, question, answer, image_url }) => {
   const [showingAnswer, setShowingAnswer] = useState(false);
   const [showingImage, setShowingImage] = useState(false);
@@ -16,11 +16,15 @@ const Note = ({ id, question, answer, image_url }) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (id !== undefined || id !== null) {
-      setFunctionButton({ func: () => removeNote(id), title: "Delete" });
+      setFunctionButton({
+        func: () => removeNote(id),
+        title: "Delete",
+        component: MdOutlineDelete,
+      });
     }
 
     return () => {
-      setFunctionButton({ func: null, title: "" });
+      setFunctionButton({ func: null, title: "", component: null });
     };
   }, []);
   const toggleAnswer = () => {
